@@ -1,70 +1,180 @@
-# Getting Started with Create React App
+# EffiTrak.tech - Construction Site Efficiency Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![EffiTrak.tech Logo](./public/logo.svg)
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+EffiTrak.tech is a sophisticated real-time dashboard for monitoring and optimizing construction site efficiency. It transforms static worksite blueprints into dynamic, interactive visualizations by integrating data from multiple sources including video feeds, CSV data, and IoT sensors.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🏗️ Interactive Blueprint View
+- Real-time heat map visualization of site activity
+- Zone-based monitoring and analytics
+- Dynamic worker density tracking
+- Equipment location monitoring
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 📊 Advanced Analytics
+- Real-time efficiency metrics
+- Resource utilization tracking
+- Performance trend analysis
+- Custom metric calculations
 
-### `npm test`
+### 🚜 Equipment Management
+- Real-time equipment status monitoring
+- Maintenance scheduling and tracking
+- Utilization analytics
+- Location tracking
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🔮 Predictive Analytics
+- Efficiency forecasting
+- Resource optimization suggestions
+- Bottleneck prediction
+- Weather impact analysis
 
-### `npm run build`
+### 📤 Data Integration
+- Video feed analysis
+- CSV data processing
+- Real-time metric calculations
+- Automated alert system
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technology Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend**: React 18
+- **Styling**: Tailwind CSS
+- **Charts**: Recharts
+- **Icons**: Lucide React
+- **UI Components**: shadcn/ui
+- **Data Processing**: Papaparse, Lodash
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+### Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+node >= 16.0.0
+npm >= 8.0.0
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/effitrak-tech.git
+cd effitrak-tech
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. Install dependencies
+```bash
+npm install
+```
 
-## Learn More
+3. Start the development server
+```bash
+npm run dev
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+src/
+  ├── components/
+  │   ├── blueprint/      # Blueprint view components
+  │   ├── analytics/      # Analytics components
+  │   ├── equipment/      # Equipment management
+  │   ├── predictions/    # Predictive analytics
+  │   ├── upload/         # File upload components
+  │   └── shared/         # Shared components
+  ├── hooks/              # Custom React hooks
+  ├── utils/              # Utility functions
+  ├── context/            # React context providers
+  └── routes/             # Application routing
+```
 
-### Code Splitting
+## Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Data Upload Specifications
 
-### Analyzing the Bundle Size
+#### Video Files
+- Supported formats: MP4, WebM
+- Maximum file size: 100MB
+- Recommended resolution: 720p or higher
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### CSV Files
+Required columns:
+- timestamp
+- efficiency
+- utilization
+- completion
 
-### Making a Progressive Web App
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Advanced Configuration
+## Development Guidelines
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Code Style
+- Use functional components with hooks
+- Follow React best practices
+- Implement proper error handling
+- Write meaningful component documentation
+- Use TypeScript for type safety
 
-### Deployment
+### Naming Conventions
+- Components: PascalCase
+- Functions: camelCase
+- Files: PascalCase for components, camelCase for utilities
+- CSS classes: kebab-case
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Testing
 
-### `npm run build` fails to minify
+```bash
+# Run tests
+npm run test
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Run tests with coverage
+npm run test:coverage
+```
+
+## Deployment
+
+1. Build the project
+```bash
+npm run build
+```
+
+2. Preview the build
+```bash
+npm run preview
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+- React team for the excellent framework
+- Tailwind CSS for the utility-first CSS framework
+- shadcn/ui for the beautiful UI components
+- All contributors who have helped shape this project
+
+## Support
+
+For support, email support@effitrak.tech or join our Slack channel.
+
+## Roadmap
+
+- [ ] Mobile application integration
+- [ ] AI-powered resource optimization
+- [ ] 3D visualization support
+- [ ] Real-time collaboration features
+- [ ] Advanced reporting system
+
+---
+
+Built with ❤️ by the EffiTrak.tech team
