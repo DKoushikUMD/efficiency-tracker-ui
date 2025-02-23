@@ -49,34 +49,45 @@ const MetricCard = ({
 );
 
 /* --------------------- generateHistoricData --------------------- */
-const generateHistoricData = () => {
-  // Sample data for 7 days
-  const days = Array.from({ length: 7 }, (_, i) => i);
-  return days.map((day) => ({
-    date: `2025-02-${String(15 + day).padStart(2, "0")}`,
-    efficiency: 70 + Math.random() * 20,
-    laborUtilization: 65 + Math.random() * 20,
-    output: Math.floor(80 + Math.random() * 40),
-  }));
+const generateHistoricData = (rangeInDays) => {
+  const days = Array.from({ length: rangeInDays }, (_, i) => i);
+  const currentDate = new Date('2025-02-21'); // Setting this as the end date
+  
+  return days.map((day) => {
+    const date = new Date(currentDate);
+    date.setDate(date.getDate() - (rangeInDays - day - 1));
+    return {
+      date: date.toISOString().split('T')[0],
+      efficiency: 70 + Math.random() * 20,
+      laborUtilization: 65 + Math.random() * 20,
+      output: Math.floor(80 + Math.random() * 40),
+    };
+  });
 };
 
 const HistoricSummaryReport = () => {
   // State for date-range filters
   const [range, setRange] = useState("7d");
+  
+  // Range days mapping
+  const rangeDays = {
+    '7d': 7,
+    '30d': 30,
+    '90d': 90
+  };
 
-  // Generate sample data
-  const chartData = generateHistoricData();
+  // Generate sample data based on selected range
+  const [chartData, setChartData] = useState(generateHistoricData(rangeDays[range]));
 
   // Handler for changing date range
   const handleRangeChange = (newRange) => {
     setRange(newRange);
-    // You could fetch data for that new range here
+    setChartData(generateHistoricData(rangeDays[newRange]));
   };
 
   // Navigation back to the main dashboard
   const handleBack = () => {
-    // Example: use React Router, or do window.location.href
-    window.location.href = "/blueprint"; // or wherever you want to go
+    window.location.href = "/blueprint";
   };
 
   return (
@@ -209,9 +220,21 @@ const HistoricSummaryReport = () => {
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="date" stroke="#6b7280" />
+              <XAxis 
+                dataKey="date" 
+                stroke="#6b7280"
+                tickFormatter={(value) => {
+                  const date = new Date(value);
+                  return `${date.getMonth() + 1}/${date.getDate()}`;
+                }}
+              />
               <YAxis stroke="#6b7280" />
-              <Tooltip />
+              <Tooltip 
+                labelFormatter={(value) => {
+                  const date = new Date(value);
+                  return `${date.toLocaleDateString()}`;
+                }}
+              />
               <Legend />
               <Line
                 type="monotone"
@@ -258,7 +281,7 @@ const HistoricSummaryReport = () => {
                 {chartData.map((item) => (
                   <tr key={item.date} className="border-b border-gray-100">
                     <td className="px-4 py-2 text-sm text-gray-700">
-                      {item.date}
+                      {new Date(item.date).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-2 text-sm text-gray-700">
                       {item.efficiency.toFixed(1)}%
