@@ -1,10 +1,9 @@
-# EffiTrak.tech - Construction Site Efficiency Dashboard
+# CamCogni.tech - Construction Site Efficiency Dashboard
 
-![EffiTrak.tech Logo](./public/logo.svg)
 
 ## Overview
 
-EffiTrak.tech is a sophisticated real-time dashboard for monitoring and optimizing construction site efficiency. It transforms static worksite blueprints into dynamic, interactive visualizations by integrating data from multiple sources including video feeds, CSV data, and IoT sensors.
+CamCogni.tech is a sophisticated real-time dashboard for monitoring and optimizing construction site efficiency. It transforms static worksite blueprints into dynamic, interactive visualizations by integrating data from multiple sources including video feeds, CSV data, and IoT sensors.
 
 ## Features
 
@@ -177,4 +176,4 @@ For support, email support@effitrak.tech or join our Slack channel.
 
 ---
 
-Built with ❤️ by the EffiTrak.tech team
+Built with ❤️ by the CamCogni.tech team
