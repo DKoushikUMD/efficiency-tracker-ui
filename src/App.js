@@ -1,7 +1,7 @@
-import React from 'react';
-import RoutesComponent from '../src/routes/routes';
-import Header from './components/header';
-import './index.css';
+import React from "react";
+import RoutesComponent from "../src/routes/Routes";
+import Header from "./components/header";
+import "./index.css";
 
 function App() {
   return (

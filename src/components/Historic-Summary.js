@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   ArrowLeft,
   Calendar,
   BarChart,
   ArrowUpRight,
   ArrowDownRight,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   LineChart,
   Line,
@@ -15,21 +15,29 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
-import _ from 'lodash';
+} from "recharts";
+import _ from "lodash";
 
 /* --------------------- MetricCard --------------------- */
-const MetricCard = ({ title, value, change, trend, colorClass = 'bg-white' }) => (
-  <div className={`${colorClass} rounded-xl shadow-lg p-6 transform transition duration-300 hover:scale-105`}>
+const MetricCard = ({
+  title,
+  value,
+  change,
+  trend,
+  colorClass = "bg-white",
+}) => (
+  <div
+    className={`${colorClass} rounded-xl shadow-lg p-6 transform transition duration-300 hover:scale-105`}
+  >
     <h4 className="text-gray-600 text-sm mb-2">{title}</h4>
     <div className="flex items-center justify-between">
       <span className="text-3xl font-bold text-gray-800">{value}</span>
       <span
         className={`flex items-center ${
-          trend === 'up' ? 'text-green-500' : 'text-red-500'
+          trend === "up" ? "text-green-500" : "text-red-500"
         }`}
       >
-        {trend === 'up' ? (
+        {trend === "up" ? (
           <ArrowUpRight className="h-5 w-5" />
         ) : (
           <ArrowDownRight className="h-5 w-5" />
@@ -45,7 +53,7 @@ const generateHistoricData = () => {
   // Sample data for 7 days
   const days = Array.from({ length: 7 }, (_, i) => i);
   return days.map((day) => ({
-    date: `2025-02-${String(15 + day).padStart(2, '0')}`,
+    date: `2025-02-${String(15 + day).padStart(2, "0")}`,
     efficiency: 70 + Math.random() * 20,
     laborUtilization: 65 + Math.random() * 20,
     output: Math.floor(80 + Math.random() * 40),
@@ -54,7 +62,7 @@ const generateHistoricData = () => {
 
 const HistoricSummaryReport = () => {
   // State for date-range filters
-  const [range, setRange] = useState('7d');
+  const [range, setRange] = useState("7d");
 
   // Generate sample data
   const chartData = generateHistoricData();
@@ -68,7 +76,7 @@ const HistoricSummaryReport = () => {
   // Navigation back to the main dashboard
   const handleBack = () => {
     // Example: use React Router, or do window.location.href
-    window.location.href = '/'; // or wherever you want to go
+    window.location.href = "/blueprint"; // or wherever you want to go
   };
 
   return (
@@ -87,36 +95,79 @@ const HistoricSummaryReport = () => {
             <h1 className="text-2xl font-semibold text-gray-800">
               Historic Summary
             </h1>
+            <button
+              onClick={async () => {
+                try {
+                  const response = await fetch(
+                    "http://3.83.15.74:8000/reports"
+                  );
+                  const data = await response.json();
+                  // Open new tab and display the JSON data
+                  const newTab = window.open();
+                  newTab.document.write(`
+                    <html>
+                      <head>
+                        <title>AI Generated Reports</title>
+                        <style>
+                          body { 
+                            font-family: Arial, sans-serif;
+                            padding: 20px;
+                            background-color: #f5f5f5;
+                          }
+                          pre {
+                            background-color: white;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            overflow-x: auto;
+                          }
+                        </style>
+                      </head>
+                      <body>
+                        <h1>AI Generated Reports</h1>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                      </body>
+                    </html>
+                  `);
+                } catch (error) {
+                  console.error("Error fetching reports:", error);
+                  alert("Error fetching AI reports. Please try again.");
+                }
+              }}
+              className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 px-3 py-1 rounded-md border text-sm"
+            >
+              View AI Reports (JSON)
+            </button>
           </div>
           {/* Date Range Filters */}
           <div className="flex items-center space-x-2">
             <Calendar className="h-5 w-5 text-gray-600" />
             <button
-              onClick={() => handleRangeChange('7d')}
+              onClick={() => handleRangeChange("7d")}
               className={`px-3 py-1 rounded-md border text-sm ${
-                range === '7d'
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white text-gray-700 border-gray-300'
+                range === "7d"
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white text-gray-700 border-gray-300"
               }`}
             >
               Last 7 days
             </button>
             <button
-              onClick={() => handleRangeChange('30d')}
+              onClick={() => handleRangeChange("30d")}
               className={`px-3 py-1 rounded-md border text-sm ${
-                range === '30d'
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white text-gray-700 border-gray-300'
+                range === "30d"
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white text-gray-700 border-gray-300"
               }`}
             >
               Last 30 days
             </button>
             <button
-              onClick={() => handleRangeChange('90d')}
+              onClick={() => handleRangeChange("90d")}
               className={`px-3 py-1 rounded-md border text-sm ${
-                range === '90d'
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white text-gray-700 border-gray-300'
+                range === "90d"
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white text-gray-700 border-gray-300"
               }`}
             >
               Last 90 days
@@ -144,12 +195,7 @@ const HistoricSummaryReport = () => {
             change="+5.4%"
             trend="up"
           />
-          <MetricCard
-            title="Downtime"
-            value="6%"
-            change="+0.4%"
-            trend="down"
-          />
+          <MetricCard title="Downtime" value="6%" change="+0.4%" trend="down" />
         </div>
 
         {/* Chart Section */}

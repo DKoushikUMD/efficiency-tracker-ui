@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
 const Header = () => {
   return (
     <div className="flex items-center gap-3 p-4 bg-white shadow-sm">
       <div className="flex items-center">
-        <svg 
-          width="40" 
-          height="40" 
-          viewBox="0 0 100 100" 
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 100 100"
           className="text-gray-700"
         >
           <path
@@ -18,12 +18,11 @@ const Header = () => {
             fill="currentColor"
             d="M25 60h10v15H25zM45 45h10v30H45zM65 35h10v40H65z"
           />
-          <path
-            fill="currentColor"
-            d="M60 40l15-15 5 5-20 20z"
-          />
+          <path fill="currentColor" d="M60 40l15-15 5 5-20 20z" />
         </svg>
-        <h1 className="text-2xl font-bold text-gray-800 ml-2">EffiTrak.tech</h1>
+        <a href="/">
+          <h1 className="text-2xl font-bold text-gray-700 ml-2">CAMcogni</h1>
+        </a>
       </div>
     </div>
   );

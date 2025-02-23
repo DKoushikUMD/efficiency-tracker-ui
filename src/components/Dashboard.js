@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from "react";
 import {
   AlertCircle,
   Wrench,
@@ -11,8 +11,8 @@ import {
   Zap,
   ArrowUpRight,
   ArrowDownRight,
-} from 'lucide-react';
-import { Alert, AlertTitle, AlertDescription } from '../components/ui/alert';
+} from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "../components/ui/alert";
 import {
   LineChart,
   Line,
@@ -24,7 +24,7 @@ import {
   ResponsiveContainer,
   BarChart as RechartsBarChart,
   Bar,
-} from 'recharts';
+} from "recharts";
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -36,7 +36,11 @@ function getRandomFloat(min, max, decimals = 1) {
 }
 
 function getCurrentTimeString() {
-  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
 }
 
 const MetricCard = ({ title, value, change, trend }) => (
@@ -44,8 +48,16 @@ const MetricCard = ({ title, value, change, trend }) => (
     <h4 className="text-gray-600 text-sm mb-2">{title}</h4>
     <div className="flex items-center justify-between">
       <span className="text-3xl font-bold text-gray-800">{value}</span>
-      <span className={`flex items-center ${trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
-        {trend === 'up' ? <ArrowUpRight className="h-5 w-5" /> : <ArrowDownRight className="h-5 w-5" />}
+      <span
+        className={`flex items-center ${
+          trend === "up" ? "text-green-500" : "text-red-500"
+        }`}
+      >
+        {trend === "up" ? (
+          <ArrowUpRight className="h-5 w-5" />
+        ) : (
+          <ArrowDownRight className="h-5 w-5" />
+        )}
         <span className="ml-1 font-semibold">{change}</span>
       </span>
     </div>
@@ -78,11 +90,15 @@ const EquipmentCard = ({ name }) => (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <span className="text-gray-600">Utilization</span>
-        <span className="font-medium text-gray-800">{(75 + Math.random() * 20).toFixed(1)}%</span>
+        <span className="font-medium text-gray-800">
+          {(75 + Math.random() * 20).toFixed(1)}%
+        </span>
       </div>
       <div className="flex justify-between items-center">
         <span className="text-gray-600">Location</span>
-        <span className="font-medium text-gray-800">Zone {String.fromCharCode(65 + getRandomInt(0, 3))}</span>
+        <span className="font-medium text-gray-800">
+          Zone {String.fromCharCode(65 + getRandomInt(0, 3))}
+        </span>
       </div>
     </div>
   </div>
@@ -90,8 +106,8 @@ const EquipmentCard = ({ name }) => (
 
 const generateTimeSeriesData = () => {
   const hours = Array.from({ length: 24 }, (_, i) => i);
-  return hours.map(hour => ({
-    time: `${String(hour).padStart(2, '0')}:00`,
+  return hours.map((hour) => ({
+    time: `${String(hour).padStart(2, "0")}:00`,
     efficiency: 75 + Math.random() * 20,
     workers: Math.floor(15 + Math.random() * 15),
     equipment: Math.floor(8 + Math.random() * 8),
@@ -102,11 +118,11 @@ const generateTimeSeriesData = () => {
 };
 
 const BlueprintDashboard = () => {
-  const [activeTab, setActiveTab] = useState('blueprint');
+  const [activeTab, setActiveTab] = useState("blueprint");
   const [selectedZone, setSelectedZone] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState('');
+  const [lastUpdated, setLastUpdated] = useState("");
   const timeSeriesData = useMemo(() => generateTimeSeriesData(), []);
 
   const [randomWorkers, setRandomWorkers] = useState(0);
@@ -117,16 +133,16 @@ const BlueprintDashboard = () => {
   const [analytics, setAnalytics] = useState({
     overallEfficiency: 0,
     overallEfficiencyChange: 0,
-    overallEfficiencyTrend: 'up',
+    overallEfficiencyTrend: "up",
     laborUtilization: 0,
     laborUtilizationChange: 0,
-    laborUtilizationTrend: 'up',
+    laborUtilizationTrend: "up",
     taskCompletion: 0,
     taskCompletionChange: 0,
-    taskCompletionTrend: 'up',
+    taskCompletionTrend: "up",
     qualityScore: 0,
     qualityScoreChange: 0,
-    qualityScoreTrend: 'up',
+    qualityScoreTrend: "up",
     activeTime: 0,
     breakTime: 0,
     downtime: 0,
@@ -138,31 +154,31 @@ const BlueprintDashboard = () => {
   });
 
   const equipmentNames = [
-    'Excavator',
-    'Bulldozer',
-    'Crane',
-    'Loader',
-    'Dump Truck',
-    'Forklift',
-    'Backhoe',
-    'Concrete Mixer',
-    'Compactor',
-    'Grader',
+    "Excavator",
+    "Bulldozer",
+    "Crane",
+    "Loader",
+    "Dump Truck",
+    "Forklift",
+    "Backhoe",
+    "Concrete Mixer",
+    "Compactor",
+    "Grader",
   ];
   const [randomEquipmentList, setRandomEquipmentList] = useState([]);
 
   const [predictions, setPredictions] = useState({
     peakEfficiency: 0,
     peakTime: 0,
-    bottleneckZone: '',
-    bottleneckMessage: '',
+    bottleneckZone: "",
+    bottleneckMessage: "",
     staffingWorkers: 0,
-    staffingZone: '',
+    staffingZone: "",
     riskAssessment: [],
     recommendedShifts: 0,
     equipmentRelocation: 0,
     expectedGain: 0,
-    weatherForecast: '',
+    weatherForecast: "",
     weatherProbability: 0,
     weatherImpact: 0,
   });
@@ -177,8 +193,11 @@ const BlueprintDashboard = () => {
     const newAlerts = Array.from({ length: alertCount }, (_, i) => ({
       id: i + 1,
       zone: `Zone ${String.fromCharCode(65 + i)}`,
-      type: i % 2 === 0 ? 'Low Activity' : 'High Density',
-      message: i % 2 === 0 ? 'Prolonged idle time detected' : 'Worker concentration above threshold',
+      type: i % 2 === 0 ? "Low Activity" : "High Density",
+      message:
+        i % 2 === 0
+          ? "Prolonged idle time detected"
+          : "Worker concentration above threshold",
     }));
 
     const zoneAActivity = getRandomFloat(0.3, 0.9);
@@ -186,9 +205,9 @@ const BlueprintDashboard = () => {
     const zoneCActivity = getRandomFloat(0.3, 0.9);
     setSampleData({
       zones: [
-        { id: 1, name: 'Zone A', activity: zoneAActivity },
-        { id: 2, name: 'Zone B', activity: zoneBActivity },
-        { id: 3, name: 'Zone C', activity: zoneCActivity },
+        { id: 1, name: "Zone A", activity: zoneAActivity },
+        { id: 2, name: "Zone B", activity: zoneBActivity },
+        { id: 3, name: "Zone C", activity: zoneCActivity },
       ],
       alerts: newAlerts,
     });
@@ -213,19 +232,19 @@ const BlueprintDashboard = () => {
     setAnalytics({
       overallEfficiency: oe,
       overallEfficiencyChange: oeChg,
-      overallEfficiencyTrend: oeChg >= 0 ? 'up' : 'down',
+      overallEfficiencyTrend: oeChg >= 0 ? "up" : "down",
 
       laborUtilization: lu,
       laborUtilizationChange: luChg,
-      laborUtilizationTrend: luChg >= 0 ? 'up' : 'down',
+      laborUtilizationTrend: luChg >= 0 ? "up" : "down",
 
       taskCompletion: tc,
       taskCompletionChange: tcChg,
-      taskCompletionTrend: tcChg >= 0 ? 'up' : 'down',
+      taskCompletionTrend: tcChg >= 0 ? "up" : "down",
 
       qualityScore: qs,
       qualityScoreChange: qsChg,
-      qualityScoreTrend: qsChg >= 0 ? 'up' : 'down',
+      qualityScoreTrend: qsChg >= 0 ? "up" : "down",
 
       activeTime: at,
       breakTime: brk,
@@ -252,18 +271,21 @@ const BlueprintDashboard = () => {
     const staffZone = `Zone ${String.fromCharCode(65 + getRandomInt(0, 2))}`;
     const staffWorkers = getRandomInt(2, 5);
     const possibleBottleneckMsgs = [
-      'Resource shortage predicted',
-      'Machine downtime predicted',
-      'Material delay predicted',
+      "Resource shortage predicted",
+      "Machine downtime predicted",
+      "Material delay predicted",
     ];
-    const bMsg = possibleBottleneckMsgs[getRandomInt(0, possibleBottleneckMsgs.length - 1)];
+    const bMsg =
+      possibleBottleneckMsgs[
+        getRandomInt(0, possibleBottleneckMsgs.length - 1)
+      ];
     const riskA = getRandomInt(30, 45);
     const riskB = getRandomInt(30, 45);
     const riskC = getRandomInt(30, 45);
     const recShifts = getRandomInt(1, 3);
     const eqRelocation = getRandomInt(1, 5);
     const expGain = getRandomInt(10, 20);
-    const weatherOpts = ['Light Rain', 'Sunny', 'Overcast', 'Storm'];
+    const weatherOpts = ["Light Rain", "Sunny", "Overcast", "Storm"];
     const wChoice = weatherOpts[getRandomInt(0, weatherOpts.length - 1)];
     const wProb = getRandomInt(40, 90);
     const wImpact = -getRandomInt(5, 15);
@@ -284,16 +306,33 @@ const BlueprintDashboard = () => {
     });
   }, []);
 
-  const handleSaveReport = () => {
+  const handleSaveReport = async () => {
     setIsSaving(true);
-    setTimeout(() => {
-      setIsSaving(false);
+    try {
+      const response = await fetch("http://3.83.15.74:8000/run-analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Keep the original 5000ms delay
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
       setIsSaved(true);
-    }, 5000);
+    } catch (error) {
+      console.error("Error saving report:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const goToHistoricSummary = () => {
-    window.location.href = '/historic-summary';
+    window.location.href = "/historic-summary";
   };
 
   return (
@@ -303,10 +342,10 @@ const BlueprintDashboard = () => {
           <div className="bg-white border border-gray-200 rounded-lg px-4 py-2 flex-1 flex items-center justify-between">
             <div className="flex space-x-4">
               {[
-                { id: 'blueprint', icon: Map, label: 'Blueprint' },
-                { id: 'analytics', icon: BarChart, label: 'Analytics' },
-                { id: 'equipment', icon: Wrench, label: 'Equipment' },
-                { id: 'predictions', icon: TrendingUp, label: 'Predictions' },
+                { id: "blueprint", icon: Map, label: "Blueprint" },
+                { id: "analytics", icon: BarChart, label: "Analytics" },
+                { id: "equipment", icon: Wrench, label: "Equipment" },
+                { id: "predictions", icon: TrendingUp, label: "Predictions" },
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -315,8 +354,8 @@ const BlueprintDashboard = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center px-6 py-2 rounded-lg transition-colors duration-300 ${
                       activeTab === tab.id
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                        ? "bg-blue-600 text-white shadow-md"
+                        : "bg-white text-gray-700 hover:bg-gray-50"
                     }`}
                   >
                     <Icon className="h-5 w-5 mr-2" />
@@ -342,7 +381,9 @@ const BlueprintDashboard = () => {
             {isSaving && (
               <div className="flex items-center space-x-3 bg-white border border-gray-200 rounded-lg px-4 py-2">
                 <Zap className="h-5 w-5 text-blue-600 animate-spin" />
-                <span className="text-blue-600 font-medium">Saving Report...</span>
+                <span className="text-blue-600 font-medium">
+                  Saving Report...
+                </span>
               </div>
             )}
             {isSaved && (
@@ -356,7 +397,7 @@ const BlueprintDashboard = () => {
           </div>
         </div>
 
-        {activeTab === 'blueprint' && (
+        {activeTab === "blueprint" && (
           <div className="space-y-6">
             <div className="grid grid-cols-4 gap-4">
               <div className="bg-white rounded-xl shadow p-4">
@@ -391,7 +432,9 @@ const BlueprintDashboard = () => {
                   <AlertCircle className="h-8 w-8 text-red-500" />
                   <div>
                     <p className="text-sm text-gray-500">Active Alerts</p>
-                    <p className="text-xl font-bold">{sampleData.alerts.length}</p>
+                    <p className="text-xl font-bold">
+                      {sampleData.alerts.length}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -399,9 +442,13 @@ const BlueprintDashboard = () => {
             <div className="grid grid-cols-3 gap-6">
               <div className="col-span-2 bg-white rounded-xl shadow-lg p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-semibold text-gray-800">Factory Layout</h2>
+                  <h2 className="text-xl font-semibold text-gray-800">
+                    Factory Layout
+                  </h2>
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-500">Activity Level:</span>
+                    <span className="text-sm text-gray-500">
+                      Activity Level:
+                    </span>
                     <div className="flex items-center space-x-1">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
                       <span className="text-xs">Low</span>
@@ -421,8 +468,8 @@ const BlueprintDashboard = () => {
                     className="absolute inset-0"
                     style={{
                       backgroundImage:
-                        'linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px)',
-                      backgroundSize: '20px 20px',
+                        "linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px)",
+                      backgroundSize: "20px 20px",
                     }}
                   />
                   <svg
@@ -430,21 +477,36 @@ const BlueprintDashboard = () => {
                     height="100%"
                     className="absolute inset-0"
                     viewBox="0 0 800 600"
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                   >
                     {sampleData.zones[0] && (
                       <>
                         <path
                           d="M100,100 C150,80 250,80 300,100 C350,120 350,180 300,200 C250,220 150,220 100,200 C50,180 50,120 100,100"
-                          className={`transition-all duration-300 ${selectedZone?.id === 1 ? 'stroke-blue-500 stroke-2' : 'stroke-gray-400'}`}
-                          fill={`hsl(${sampleData.zones[0].activity * 120}, 70%, 50%)`}
-                          fillOpacity={selectedZone?.id === 1 ? '0.9' : '0.7'}
+                          className={`transition-all duration-300 ${
+                            selectedZone?.id === 1
+                              ? "stroke-blue-500 stroke-2"
+                              : "stroke-gray-400"
+                          }`}
+                          fill={`hsl(${
+                            sampleData.zones[0].activity * 120
+                          }, 70%, 50%)`}
+                          fillOpacity={selectedZone?.id === 1 ? "0.9" : "0.7"}
                           onClick={() => setSelectedZone(sampleData.zones[0])}
                         />
-                        <text x="200" y="150" textAnchor="middle" fill="white" className="font-bold">
-                          <tspan x="200" dy="0">Zone A</tspan>
+                        <text
+                          x="200"
+                          y="150"
+                          textAnchor="middle"
+                          fill="white"
+                          className="font-bold"
+                        >
+                          <tspan x="200" dy="0">
+                            Zone A
+                          </tspan>
                           <tspan x="200" dy="20" className="text-sm">
-                            {(sampleData.zones[0].activity * 100).toFixed(1)}% Active
+                            {(sampleData.zones[0].activity * 100).toFixed(1)}%
+                            Active
                           </tspan>
                         </text>
                       </>
@@ -453,15 +515,30 @@ const BlueprintDashboard = () => {
                       <>
                         <path
                           d="M450,250 L600,200 L700,300 L600,400 L450,350 Z"
-                          className={`transition-all duration-300 ${selectedZone?.id === 2 ? 'stroke-blue-500 stroke-2' : 'stroke-gray-400'}`}
-                          fill={`hsl(${sampleData.zones[1].activity * 120}, 70%, 50%)`}
-                          fillOpacity={selectedZone?.id === 2 ? '0.9' : '0.7'}
+                          className={`transition-all duration-300 ${
+                            selectedZone?.id === 2
+                              ? "stroke-blue-500 stroke-2"
+                              : "stroke-gray-400"
+                          }`}
+                          fill={`hsl(${
+                            sampleData.zones[1].activity * 120
+                          }, 70%, 50%)`}
+                          fillOpacity={selectedZone?.id === 2 ? "0.9" : "0.7"}
                           onClick={() => setSelectedZone(sampleData.zones[1])}
                         />
-                        <text x="575" y="300" textAnchor="middle" fill="white" className="font-bold">
-                          <tspan x="575" dy="0">Zone B</tspan>
+                        <text
+                          x="575"
+                          y="300"
+                          textAnchor="middle"
+                          fill="white"
+                          className="font-bold"
+                        >
+                          <tspan x="575" dy="0">
+                            Zone B
+                          </tspan>
                           <tspan x="575" dy="20" className="text-sm">
-                            {(sampleData.zones[1].activity * 100).toFixed(1)}% Active
+                            {(sampleData.zones[1].activity * 100).toFixed(1)}%
+                            Active
                           </tspan>
                         </text>
                       </>
@@ -470,15 +547,30 @@ const BlueprintDashboard = () => {
                       <>
                         <path
                           d="M150,300 Q200,280 250,300 T350,300 T450,300 Q500,350 450,400 Q400,450 350,400 T250,400 T150,400 Q100,350 150,300"
-                          className={`transition-all duration-300 ${selectedZone?.id === 3 ? 'stroke-blue-500 stroke-2' : 'stroke-gray-400'}`}
-                          fill={`hsl(${sampleData.zones[2].activity * 120}, 70%, 50%)`}
-                          fillOpacity={selectedZone?.id === 3 ? '0.9' : '0.7'}
+                          className={`transition-all duration-300 ${
+                            selectedZone?.id === 3
+                              ? "stroke-blue-500 stroke-2"
+                              : "stroke-gray-400"
+                          }`}
+                          fill={`hsl(${
+                            sampleData.zones[2].activity * 120
+                          }, 70%, 50%)`}
+                          fillOpacity={selectedZone?.id === 3 ? "0.9" : "0.7"}
                           onClick={() => setSelectedZone(sampleData.zones[2])}
                         />
-                        <text x="300" y="350" textAnchor="middle" fill="white" className="font-bold">
-                          <tspan x="300" dy="0">Zone C</tspan>
+                        <text
+                          x="300"
+                          y="350"
+                          textAnchor="middle"
+                          fill="white"
+                          className="font-bold"
+                        >
+                          <tspan x="300" dy="0">
+                            Zone C
+                          </tspan>
                           <tspan x="300" dy="20" className="text-sm">
-                            {(sampleData.zones[2].activity * 100).toFixed(1)}% Active
+                            {(sampleData.zones[2].activity * 100).toFixed(1)}%
+                            Active
                           </tspan>
                         </text>
                       </>
@@ -496,17 +588,17 @@ const BlueprintDashboard = () => {
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${
                           selectedZone.activity > 0.7
-                            ? 'bg-green-100 text-green-700'
+                            ? "bg-green-100 text-green-700"
                             : selectedZone.activity > 0.4
-                            ? 'bg-yellow-100 text-yellow-700'
-                            : 'bg-red-100 text-red-700'
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
                         }`}
                       >
                         {selectedZone.activity > 0.7
-                          ? 'High Activity'
+                          ? "High Activity"
                           : selectedZone.activity > 0.4
-                          ? 'Medium Activity'
-                          : 'Low Activity'}
+                          ? "Medium Activity"
+                          : "Low Activity"}
                       </span>
                     </div>
                     <div className="space-y-6">
@@ -528,20 +620,26 @@ const BlueprintDashboard = () => {
                             <Users className="h-5 w-5 text-blue-500" />
                             <span className="text-gray-600">Workers</span>
                           </div>
-                          <p className="text-2xl font-bold mt-2">{Math.floor(randomWorkers / 3)}</p>
+                          <p className="text-2xl font-bold mt-2">
+                            {Math.floor(randomWorkers / 3)}
+                          </p>
                         </div>
                         <div className="bg-gray-50 rounded-lg p-4">
                           <div className="flex items-center space-x-2">
                             <Wrench className="h-5 w-5 text-green-500" />
                             <span className="text-gray-600">Equipment</span>
                           </div>
-                          <p className="text-2xl font-bold mt-2">{Math.floor(randomEquipment / 3)}</p>
+                          <p className="text-2xl font-bold mt-2">
+                            {Math.floor(randomEquipment / 3)}
+                          </p>
                         </div>
                       </div>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
                           <span className="text-gray-600">Temperature</span>
-                          <span className="font-medium text-gray-800">23°C</span>
+                          <span className="font-medium text-gray-800">
+                            23°C
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-gray-600">Humidity</span>
@@ -549,23 +647,31 @@ const BlueprintDashboard = () => {
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-gray-600">Noise Level</span>
-                          <span className="font-medium text-gray-800">72 dB</span>
+                          <span className="font-medium text-gray-800">
+                            72 dB
+                          </span>
                         </div>
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div className="bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 p-6 flex items-center justify-center">
-                    <p className="text-gray-500 text-center">Select a zone to view details</p>
+                    <p className="text-gray-500 text-center">
+                      Select a zone to view details
+                    </p>
                   </div>
                 )}
                 <div className="space-y-3">
-                  {sampleData.alerts.map(alert => (
+                  {sampleData.alerts.map((alert) => (
                     <Alert key={alert.id} variant="destructive">
                       <AlertCircle className="h-4 w-4" />
                       <div className="ml-2">
-                        <AlertTitle className="font-semibold">{alert.zone} - {alert.type}</AlertTitle>
-                        <AlertDescription className="mt-1 text-sm">{alert.message}</AlertDescription>
+                        <AlertTitle className="font-semibold">
+                          {alert.zone} - {alert.type}
+                        </AlertTitle>
+                        <AlertDescription className="mt-1 text-sm">
+                          {alert.message}
+                        </AlertDescription>
                       </div>
                     </Alert>
                   ))}
@@ -575,38 +681,48 @@ const BlueprintDashboard = () => {
           </div>
         )}
 
-        {activeTab === 'analytics' && (
+        {activeTab === "analytics" && (
           <div className="space-y-8">
             <div className="grid grid-cols-4 gap-6">
               <MetricCard
                 title="Overall Efficiency"
                 value={`${analytics.overallEfficiency}%`}
-                change={`${analytics.overallEfficiencyChange > 0 ? '+' : ''}${analytics.overallEfficiencyChange}%`}
+                change={`${analytics.overallEfficiencyChange > 0 ? "+" : ""}${
+                  analytics.overallEfficiencyChange
+                }%`}
                 trend={analytics.overallEfficiencyTrend}
               />
               <MetricCard
                 title="Labor Utilization"
                 value={`${analytics.laborUtilization}%`}
-                change={`${analytics.laborUtilizationChange > 0 ? '+' : ''}${analytics.laborUtilizationChange}%`}
+                change={`${analytics.laborUtilizationChange > 0 ? "+" : ""}${
+                  analytics.laborUtilizationChange
+                }%`}
                 trend={analytics.laborUtilizationTrend}
               />
               <MetricCard
                 title="Task Completion"
                 value={`${analytics.taskCompletion}%`}
-                change={`${analytics.taskCompletionChange > 0 ? '+' : ''}${analytics.taskCompletionChange}%`}
+                change={`${analytics.taskCompletionChange > 0 ? "+" : ""}${
+                  analytics.taskCompletionChange
+                }%`}
                 trend={analytics.taskCompletionTrend}
               />
               <MetricCard
                 title="Quality Score"
                 value={`${analytics.qualityScore}%`}
-                change={`${analytics.qualityScoreChange > 0 ? '+' : ''}${analytics.qualityScoreChange}%`}
+                change={`${analytics.qualityScoreChange > 0 ? "+" : ""}${
+                  analytics.qualityScoreChange
+                }%`}
                 trend={analytics.qualityScoreTrend}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-xl font-semibold mb-6 text-gray-800">Performance Metrics</h3>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800">
+                  Performance Metrics
+                </h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={timeSeriesData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -614,14 +730,34 @@ const BlueprintDashboard = () => {
                     <YAxis stroke="#6b7280" />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="efficiency" stroke="#2563eb" strokeWidth={2} dot={false} />
-                    <Line type="monotone" dataKey="workCompletion" stroke="#10b981" strokeWidth={2} dot={false} />
-                    <Line type="monotone" dataKey="laborUtilization" stroke="#f59e0b" strokeWidth={2} dot={false} />
+                    <Line
+                      type="monotone"
+                      dataKey="efficiency"
+                      stroke="#2563eb"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="workCompletion"
+                      stroke="#10b981"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="laborUtilization"
+                      stroke="#f59e0b"
+                      strokeWidth={2}
+                      dot={false}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-xl font-semibold mb-6 text-gray-800">Resource Distribution</h3>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800">
+                  Resource Distribution
+                </h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <RechartsBarChart data={timeSeriesData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -629,8 +765,16 @@ const BlueprintDashboard = () => {
                     <YAxis stroke="#6b7280" />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="workers" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="equipment" fill="#10b981" radius={[4, 4, 0, 0]} />
+                    <Bar
+                      dataKey="workers"
+                      fill="#3b82f6"
+                      radius={[4, 4, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="equipment"
+                      fill="#10b981"
+                      radius={[4, 4, 0, 0]}
+                    />
                   </RechartsBarChart>
                 </ResponsiveContainer>
               </div>
@@ -638,15 +782,34 @@ const BlueprintDashboard = () => {
 
             <div className="grid grid-cols-3 gap-6">
               <div className="bg-white rounded-xl shadow-lg p-6 h-full">
-                <h3 className="text-xl font-semibold mb-6 text-gray-800">Time Distribution</h3>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800">
+                  Time Distribution
+                </h3>
                 <div className="space-y-6">
-                  <ProgressBar label="Active Time" value={analytics.activeTime} max="480" color="bg-green-500" />
-                  <ProgressBar label="Break Time" value={analytics.breakTime} max="480" color="bg-blue-500" />
-                  <ProgressBar label="Downtime" value={analytics.downtime} max="480" color="bg-red-500" />
+                  <ProgressBar
+                    label="Active Time"
+                    value={analytics.activeTime}
+                    max="480"
+                    color="bg-green-500"
+                  />
+                  <ProgressBar
+                    label="Break Time"
+                    value={analytics.breakTime}
+                    max="480"
+                    color="bg-blue-500"
+                  />
+                  <ProgressBar
+                    label="Downtime"
+                    value={analytics.downtime}
+                    max="480"
+                    color="bg-red-500"
+                  />
                 </div>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-6 h-full">
-                <h3 className="text-xl font-semibold mb-6 text-gray-800">Task Metrics</h3>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800">
+                  Task Metrics
+                </h3>
                 <div className="space-y-4 text-gray-600">
                   <div className="flex justify-between items-center">
                     <span>Tasks Completed</span>
@@ -675,33 +838,43 @@ const BlueprintDashboard = () => {
                 </div>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-6 h-full">
-                <h3 className="text-xl font-semibold mb-6 text-gray-800">Efficiency Factors</h3>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800">
+                  Efficiency Factors
+                </h3>
                 <div className="space-y-4 text-gray-600">
                   <div className="flex items-center justify-between">
                     <span>Worker Density</span>
                     <div className="flex items-center">
-                      <span className="font-semibold text-gray-800 mr-2">Optimal</span>
+                      <span className="font-semibold text-gray-800 mr-2">
+                        Optimal
+                      </span>
                       <span className="w-2 h-2 rounded-full bg-green-500" />
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Equipment Utilization</span>
                     <div className="flex items-center">
-                      <span className="font-semibold text-gray-800 mr-2">High</span>
+                      <span className="font-semibold text-gray-800 mr-2">
+                        High
+                      </span>
                       <span className="w-2 h-2 rounded-full bg-blue-500" />
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Process Adherence</span>
                     <div className="flex items-center">
-                      <span className="font-semibold text-gray-800 mr-2">Good</span>
+                      <span className="font-semibold text-gray-800 mr-2">
+                        Good
+                      </span>
                       <span className="w-2 h-2 rounded-full bg-yellow-500" />
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Resource Allocation</span>
                     <div className="flex items-center">
-                      <span className="font-semibold text-gray-800 mr-2">Review</span>
+                      <span className="font-semibold text-gray-800 mr-2">
+                        Review
+                      </span>
                       <span className="w-2 h-2 rounded-full bg-orange-500" />
                     </div>
                   </div>
@@ -711,7 +884,7 @@ const BlueprintDashboard = () => {
           </div>
         )}
 
-        {activeTab === 'equipment' && (
+        {activeTab === "equipment" && (
           <div className="grid grid-cols-3 gap-6">
             {randomEquipmentList.map((name, idx) => (
               <EquipmentCard key={idx} name={name} />
@@ -719,7 +892,7 @@ const BlueprintDashboard = () => {
           </div>
         )}
 
-        {activeTab === 'predictions' && (
+        {activeTab === "predictions" && (
           <div className="space-y-6">
             <div className="grid grid-cols-3 gap-6">
               <div className="col-span-2 bg-white rounded-xl shadow-lg p-6">
@@ -730,49 +903,89 @@ const BlueprintDashboard = () => {
                     <YAxis stroke="#6b7280" />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="efficiency" stroke="#2563eb" name="Historical" strokeWidth={2} />
-                    <Line type="monotone" dataKey="predicted" stroke="#10b981" name="Predicted" strokeWidth={2} strokeDasharray="5 5" />
+                    <Line
+                      type="monotone"
+                      dataKey="efficiency"
+                      stroke="#2563eb"
+                      name="Historical"
+                      strokeWidth={2}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="predicted"
+                      stroke="#10b981"
+                      name="Predicted"
+                      strokeWidth={2}
+                      strokeDasharray="5 5"
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
               <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h3 className="text-xl font-semibold mb-4 text-gray-800">Predictive Insights</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                    Predictive Insights
+                  </h3>
                   <div className="space-y-4">
                     <div className="p-4 bg-blue-100 rounded-lg">
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-blue-700">Peak Efficiency</span>
-                        <span className="font-semibold text-blue-600">{predictions.peakEfficiency}%</span>
+                        <span className="font-medium text-blue-700">
+                          Peak Efficiency
+                        </span>
+                        <span className="font-semibold text-blue-600">
+                          {predictions.peakEfficiency}%
+                        </span>
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">Expected at {predictions.peakTime}:00</p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Expected at {predictions.peakTime}:00
+                      </p>
                     </div>
                     <div className="p-4 bg-yellow-100 rounded-lg">
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-yellow-700">Potential Bottleneck</span>
-                        <span className="font-semibold text-yellow-600">{predictions.bottleneckZone}</span>
+                        <span className="font-medium text-yellow-700">
+                          Potential Bottleneck
+                        </span>
+                        <span className="font-semibold text-yellow-600">
+                          {predictions.bottleneckZone}
+                        </span>
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">{predictions.bottleneckMessage}</p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {predictions.bottleneckMessage}
+                      </p>
                     </div>
                     <div className="p-4 bg-green-100 rounded-lg">
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-green-700">Optimal Staffing</span>
-                        <span className="font-semibold text-green-600">+{predictions.staffingWorkers} workers</span>
+                        <span className="font-medium text-green-700">
+                          Optimal Staffing
+                        </span>
+                        <span className="font-semibold text-green-600">
+                          +{predictions.staffingWorkers} workers
+                        </span>
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">Recommended for {predictions.staffingZone}</p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Recommended for {predictions.staffingZone}
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h3 className="text-xl font-semibold mb-4 text-gray-800">Risk Assessment</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                    Risk Assessment
+                  </h3>
                   <div className="space-y-4">
-                    {['Zone A', 'Zone B', 'Zone C'].map((zone, index) => (
-                      <div key={zone} className="flex items-center justify-between">
+                    {["Zone A", "Zone B", "Zone C"].map((zone, index) => (
+                      <div
+                        key={zone}
+                        className="flex items-center justify-between"
+                      >
                         <span className="text-gray-600">{zone}</span>
                         <div className="flex items-center space-x-3">
                           <div className="w-24 bg-gray-200 rounded-full h-2">
                             <div
                               className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${predictions.riskAssessment[index]}%` }}
+                              style={{
+                                width: `${predictions.riskAssessment[index]}%`,
+                              }}
                             />
                           </div>
                           <span className="text-sm text-gray-600 min-w-[40px]">
@@ -787,36 +1000,56 @@ const BlueprintDashboard = () => {
             </div>
             <div className="grid grid-cols-3 gap-6">
               <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-gray-800">Resource Optimization</h3>
+                <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                  Resource Optimization
+                </h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Recommended Shifts</span>
-                    <span className="font-medium text-gray-800">+{predictions.recommendedShifts} Evening</span>
+                    <span className="font-medium text-gray-800">
+                      +{predictions.recommendedShifts} Evening
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Equipment Relocation</span>
-                    <span className="font-medium text-gray-800">{predictions.equipmentRelocation} units</span>
+                    <span className="font-medium text-gray-800">
+                      {predictions.equipmentRelocation} units
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Expected Gain</span>
-                    <span className="font-medium text-green-600">+{predictions.expectedGain}%</span>
+                    <span className="font-medium text-green-600">
+                      +{predictions.expectedGain}%
+                    </span>
                   </div>
                 </div>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-gray-800">Weather Impact</h3>
+                <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                  Weather Impact
+                </h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Forecast</span>
-                    <span className="font-medium text-gray-800">{predictions.weatherForecast}</span>
+                    <span className="font-medium text-gray-800">
+                      {predictions.weatherForecast}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Probability</span>
-                    <span className="font-medium text-gray-800">{predictions.weatherProbability}%</span>
+                    <span className="font-medium text-gray-800">
+                      {predictions.weatherProbability}%
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Productivity Impact</span>
-                    <span className={`font-medium ${predictions.weatherImpact < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                    <span
+                      className={`font-medium ${
+                        predictions.weatherImpact < 0
+                          ? "text-red-600"
+                          : "text-green-600"
+                      }`}
+                    >
                       {predictions.weatherImpact}%
                     </span>
                   </div>
