@@ -1,10 +1,10 @@
-# EffiTrak.tech - Construction Site Efficiency Dashboard
+# CAMcogni.tech - Construction Site Efficiency Dashboard
 
-![EffiTrak.tech Logo](./public/logo.svg)
+![CAMcogni.tech Logo](./public/logo.svg)
 
 ## Overview
 
-EffiTrak.tech is a sophisticated real-time dashboard for monitoring and optimizing construction site efficiency. It transforms static worksite blueprints into dynamic, interactive visualizations by integrating data from multiple sources including video feeds, CSV data, and IoT sensors.
+CAMcogni.tech is a sophisticated real-time dashboard for monitoring and optimizing construction site efficiency. It transforms static worksite blueprints into dynamic, interactive visualizations by integrating data from multiple sources including video feeds, CSV data, and IoT sensors.
 
 ## Features
 
@@ -60,8 +60,8 @@ npm >= 8.0.0
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/effitrak-tech.git
-cd effitrak-tech
+git clone https://github.com/yourusername/CAMcogni-tech.git
+cd CAMcogni-tech
 ```
 
 2. Install dependencies
@@ -165,7 +165,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Support
 
-For support, email support@effitrak.tech or join our Slack channel.
+For support, email support@CAMcogni.tech or join our Slack channel.
 
 ## Roadmap
 
@@ -177,4 +177,4 @@ For support, email support@effitrak.tech or join our Slack channel.
 
 ---
 
-Built with ❤️ by the EffiTrak.tech team
+Built with ❤️ by the CAMcogni.tech team
